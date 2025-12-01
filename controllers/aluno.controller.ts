@@ -13,17 +13,14 @@ export const cadastrarAluno = async (req: Request, res: Response) => {
     const hashedPassword = await createHashPassword(userData.senha)
 
     newAluno.nome = userData.nome;
-    newAluno.senha = hashedPassword;
-    newAluno.cpf = userData.cpf;
-    newAluno.telefone = userData.telefone;
-    newAluno.cidade_distrito = userData.cidade_distrito;
-    newAluno.endereco = userData.endereco;
-    newAluno.instituicao = userData.instituicao;
     newAluno.curso = userData.curso;
-    newAluno.ponto_embarque = userData.ponto_embarque;
-    newAluno.declaracao_matricula = userData.declaracao_matricula;
-    newAluno.foto_rosto = userData.foto_rosto;
+    newAluno.cpf = userData.cpf;
+    newAluno.instituicao = userData.universidade;
+    newAluno.senha = hashedPassword;
     newAluno.turno = userData.turno;
+    newAluno.ponto_embarque = "none";
+    newAluno.declaracao_matricula = "none";
+    newAluno.foto_rosto = "none";
 
     const result = await alunoRepository.save(newAluno);
 
@@ -36,16 +33,22 @@ export const cadastrarAluno = async (req: Request, res: Response) => {
 // LOGAR
 export const logarAluno = async (req: Request, res: Response) => {
 
-    const cpf = req.body.cpf
+    const userCpf = req.body.cpf
     const password = req.body.senha
 
     // boolean
-    const verificado = await verifyPasswordByCpf(cpf, password)
+    const verificado = await verifyPasswordByCpf(userCpf, password)
 
+    const aluno = await alunoRepository.findOne({ where: { cpf: userCpf } });
+
+    if (aluno)
+        aluno.senha = ""
+    
     if (verificado) {
         return res.json({
             status: "Ok",
-            msg: "Usuário logado com sucesso."
+            msg: "Usuário logado com sucesso.",
+            aluno: aluno
         });
     } else {
         return res.json({
@@ -55,7 +58,6 @@ export const logarAluno = async (req: Request, res: Response) => {
     }
 
 };
-
 
 const createHashPassword = async (password: string) => {
     const saltHounds = 10

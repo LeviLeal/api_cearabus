@@ -1,5 +1,9 @@
 import { DataSource } from "typeorm"
 import { Aluno } from "./entities/aluno"
+import { Admin } from "./entities/admin"
+import { Curso } from "./entities/curso"
+import { Reclamacao } from "./entities/reclamacao"
+import { Aviso } from "./entities/aviso"
 
 const AppDataSource = new DataSource({
     type: "mariadb",
@@ -10,7 +14,7 @@ const AppDataSource = new DataSource({
     database: "cearabus",
     synchronize: true,
     logging: true,
-    entities: [Aluno],
+    entities: [Aluno, Admin, Curso, Reclamacao, Aviso],
     subscribers: [],
     migrations: []
 })

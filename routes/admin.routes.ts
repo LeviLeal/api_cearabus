@@ -7,7 +7,7 @@ import {
 
 const router = Router();
 
-router.get("/", listarAlunos);
+router.get("/listar_alunos/", listarAlunos);
 router.patch("/aprovar/:id", aprovarAluno);
 router.delete("/remover/:id", removerAluno);
 

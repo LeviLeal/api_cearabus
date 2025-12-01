@@ -2,10 +2,12 @@ import "reflect-metadata";
 import express, { Request, Response } from "express"
 import cors from 'cors'
 import AppDataSource from "./AppDataSource"
-import { Aluno } from "./entities/aluno"
 
-import AlunoRoutes from "./routes/alunos.routes"
+import AutenticarRoutes from "./routes/autenticar.routes"
 import AdminRoutes from "./routes/admin.routes"
+import CursoRoutes from "./routes/cursos.routes"
+import AvisoRoutes from "./routes/avisos.routes"
+import ReclamacaoRoutes from "./routes/reclamacoes.routes"
 
 const app = express()
 
@@ -13,8 +15,6 @@ app.use(express.json())
 app.use(cors())
 
 AppDataSource.initialize().then(() => {
-    const alunoRepository = AppDataSource.getRepository(Aluno)
-
 
     // CREATE ALUNO
     app.listen(3000, () => {
@@ -26,9 +26,11 @@ AppDataSource.initialize().then(() => {
             });
         })
 
-        app.use("/aluno/", AlunoRoutes)
+        app.use("/autenticar/", AutenticarRoutes)
         app.use("/admin/", AdminRoutes)
-
+        app.use("/curso/", CursoRoutes)
+        app.use("/aviso/", AvisoRoutes)
+        app.use("/reclamacao/", ReclamacaoRoutes)
 
     })
 }).catch((error) => {
