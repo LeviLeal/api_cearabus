@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import AppDataSource from "../AppDataSource";
-import bcrypt, { hash } from "bcrypt"
 import { Reclamacao } from "../entities/reclamacao";
 
 const reclamacaoRepository = AppDataSource.getRepository(Reclamacao);

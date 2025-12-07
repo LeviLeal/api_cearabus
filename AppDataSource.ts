@@ -4,6 +4,7 @@ import { Admin } from "./entities/admin"
 import { Curso } from "./entities/curso"
 import { Reclamacao } from "./entities/reclamacao"
 import { Aviso } from "./entities/aviso"
+import { Rota } from "./entities/rota"
 
 const AppDataSource = new DataSource({
     type: "mariadb",
@@ -14,7 +15,7 @@ const AppDataSource = new DataSource({
     database: "cearabus",
     synchronize: true,
     logging: true,
-    entities: [Aluno, Admin, Curso, Reclamacao, Aviso],
+    entities: [Aluno, Admin, Curso, Reclamacao, Aviso, Rota],
     subscribers: [],
     migrations: []
 })

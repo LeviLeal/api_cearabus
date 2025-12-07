@@ -8,6 +8,7 @@ import AdminRoutes from "./routes/admin.routes"
 import CursoRoutes from "./routes/cursos.routes"
 import AvisoRoutes from "./routes/avisos.routes"
 import ReclamacaoRoutes from "./routes/reclamacoes.routes"
+import RotaRoutes from "./routes/rotas.routes"
 
 const app = express()
 
@@ -31,6 +32,7 @@ AppDataSource.initialize().then(() => {
         app.use("/curso/", CursoRoutes)
         app.use("/aviso/", AvisoRoutes)
         app.use("/reclamacao/", ReclamacaoRoutes)
+        app.use("/rota/", RotaRoutes)
 
     })
 }).catch((error) => {

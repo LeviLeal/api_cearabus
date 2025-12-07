@@ -11,11 +11,15 @@ export class Aluno {
     @Column({ type: "varchar", length: 255 })
     cpf: string
     @Column({ type: "varchar", length: 255 })
+    telefone: string
+    @Column({ type: "varchar", length: 255 })
     instituicao: string
     @Column({ type: "varchar", length: 255 })
     curso: string
     @Column({ type: "varchar", length: 255 })
     ponto_embarque: string
+    @Column({ type: "varchar", length: 255 })
+    numero_matricula: string
     @Column({ type: "varchar", length: 255 })
     declaracao_matricula: string
     @Column({ type: "varchar", length: 255 })

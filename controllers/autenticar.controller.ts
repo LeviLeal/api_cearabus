@@ -15,9 +15,11 @@ export const cadastrarAluno = async (req: Request, res: Response) => {
     const hashedPassword = await createHashPassword(userData.senha)
 
     newAluno.nome = userData.nome;
-    newAluno.curso = userData.curso;
     newAluno.cpf = userData.cpf;
+    newAluno.telefone = userData.telefone;
+    newAluno.curso = userData.curso;
     newAluno.instituicao = userData.universidade;
+    newAluno.numero_matricula = userData.numeroMatricula;
     newAluno.senha = hashedPassword;
     newAluno.turno = userData.turno;
     newAluno.ponto_embarque = "none";
@@ -73,7 +75,7 @@ export const logar = async (req: Request, res: Response) => {
                 tipo_user: "estudante"
             });
         } else if (verificado.tipoUsuario == "admin") {
-            const admin = await alunoRepository.findOne({ where: { cpf: userCpf } });
+            const admin = await adminRepository.findOne({ where: { cpf: userCpf } });
             if (admin)
                 admin.senha = ""
             return res.json({

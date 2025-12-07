@@ -43,6 +43,37 @@ export const aprovarAluno = async (req: Request, res: Response) => {
     });
 };
 
+
+// APROVAR IDENTIDADE
+export const reprovarAluno = async (req: Request, res: Response) => {
+    if (!req.params.id) {
+        return res.json({
+            status: "Erro",
+            message: "id nao informado",
+        });
+    }
+
+    let userId = parseInt(req.params.id);
+    const aluno = await alunoRepository.findOne({ where: { id: userId } });
+
+    if (aluno == null) {
+        return res.json({
+            status: "Erro",
+            message: "Aluno nao existe",
+        });
+    }
+
+    aluno.aprovado = false;
+
+    const result = await alunoRepository.save(aluno);
+
+    return res.json({
+        status: "OK",
+        data: result,
+    });
+};
+
+
 // REMOVER IDENTIDADE
 export const removerAluno = async (req: Request, res: Response) => {
     if (!req.params.id) {
