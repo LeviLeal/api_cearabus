@@ -26,6 +26,8 @@ export class Aluno {
     foto_rosto: string
     @Column({ type: "varchar", length: 255 })
     turno: string
+    @Column({ type: "varchar", length: 255 })
+    comprovante_residencia: string
     @Column({ type: "boolean"})
     aprovado: boolean = false
 }
