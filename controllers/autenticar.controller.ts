@@ -30,6 +30,9 @@ export const cadastrarAluno = async (req: Request, res: Response) => {
     newAluno.senha = hashedPassword;
     newAluno.turno = userData.turno;
     newAluno.ponto_embarque = userData.pontoEmbarque;
+    newAluno.foto_rosto = "userData.pontoEmbarque";
+
+    console.log("console fucking log: " + req.files)
 
     // arquivos reais
     newAluno.declaracao_matricula =
@@ -108,8 +111,9 @@ const createHashPassword = async (password: string) => {
 };
 
 const verifyPasswordByCpf = async (userCpf: string, password: string) => {
+    
     const aluno = await alunoRepository.findOne({ where: { cpf: userCpf } });
-
+    
     if (aluno != null) {
         const hashedAlunoPassword = aluno?.senha;
         if (!hashedAlunoPassword) return { sucesso: false };
