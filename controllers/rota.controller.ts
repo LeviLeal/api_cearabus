@@ -6,11 +6,12 @@ const rotaRepository = AppDataSource.getRepository(Rota);
 
 // LISTAR ROTAS
 export const listarRotas = async (req: Request, res: Response) => {
-    const cursos = await rotaRepository.find();
+
+    const rotas = await rotaRepository.find();
 
     return res.json({
         status: "OK",
-        data: cursos
+        data: rotas
     });
 };
 
@@ -18,6 +19,7 @@ export const listarRotas = async (req: Request, res: Response) => {
 export const criarRota = async (req: Request, res: Response) => {
     const newRota = new Rota();
 
+    newRota.nome = req.body.nome;
     newRota.horario = req.body.horario;
     newRota.destinos = req.body.destinos;
     newRota.instituicoes = req.body.instituicoes;

@@ -5,6 +5,8 @@ export class Rota {
     @PrimaryGeneratedColumn()
     id: number
     @Column({ type: "varchar", length: 255 })
+    nome: string
+    @Column({ type: "varchar", length: 255 })
     destinos: string
     @Column({ type: "varchar", length: 255 })
     horario: string

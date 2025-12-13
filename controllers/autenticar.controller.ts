@@ -10,12 +10,21 @@ const adminRepository = AppDataSource.getRepository(Admin);
 // CREATE ALUNO
 export const cadastrarAluno = async (req: Request, res: Response) => {
     const userData = req.body;
+    console.log("req.files =", req.files);
+    console.log("req.body =", req.body);
 
     // arquivos recebidos do multer
     const files = req.files as {
         declaracaoMatricula?: Express.Multer.File[];
         comprovanteResidencia?: Express.Multer.File[];
     };
+
+    if (!files?.declaracaoMatricula || !files?.comprovanteResidencia) {
+        return res.status(400).json({ error: "Arquivos obrigatórios" });
+    }
+
+    const declaracaoPath = files.declaracaoMatricula[0]?.path ? files.declaracaoMatricula[0]?.path : "none";
+    const comprovantePath = files.comprovanteResidencia[0]?.path ? files.comprovanteResidencia[0].path : "none";
 
     const newAluno = new Aluno();
 
@@ -31,15 +40,8 @@ export const cadastrarAluno = async (req: Request, res: Response) => {
     newAluno.turno = userData.turno;
     newAluno.ponto_embarque = userData.pontoEmbarque;
     newAluno.foto_rosto = "userData.pontoEmbarque";
-
-    console.log("console fucking log: " + req.files)
-
-    // arquivos reais
-    newAluno.declaracao_matricula =
-        files?.declaracaoMatricula?.[0]?.path || "none";
-
-    newAluno.comprovante_residencia =
-        files?.comprovanteResidencia?.[0]?.path || "none";
+    newAluno.declaracao_matricula = declaracaoPath;
+    newAluno.comprovante_residencia = comprovantePath;
 
     const result = await alunoRepository.save(newAluno);
 
@@ -111,9 +113,9 @@ const createHashPassword = async (password: string) => {
 };
 
 const verifyPasswordByCpf = async (userCpf: string, password: string) => {
-    
+
     const aluno = await alunoRepository.findOne({ where: { cpf: userCpf } });
-    
+
     if (aluno != null) {
         const hashedAlunoPassword = aluno?.senha;
         if (!hashedAlunoPassword) return { sucesso: false };
